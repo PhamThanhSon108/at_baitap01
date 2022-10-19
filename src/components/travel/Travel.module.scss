@@ -1,0 +1,29 @@
+.wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 15px;
+}
+.search__travel {
+}
+// .ant-row {
+//   background-color: red !important;
+// }
+.ant-btn {
+  flex-grow: 1;
+  margin-right: 17px;
+}
+.wrap__search {
+  display: flex;
+  justify-content: space-between;
+  width: 500px;
+}
+h1.ant-typography {
+  margin-bottom: 0;
+}
+div .title {
+  width: 500px;
+  margin: 10px 0 0px;
+  text-align: start;
+}
