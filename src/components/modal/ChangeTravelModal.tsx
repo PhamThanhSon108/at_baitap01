@@ -21,6 +21,9 @@ const ChangeTravelModal = ({
     (state) => state.travel.statusAddTravels
   );
   const handleChangeTravel = () => {
+    if (title?.trim() === Travel.title && author?.trim() === Travel.author) {
+      return;
+    }
     if (title?.trim() && author?.trim()) {
       dispatch(changeTravel({ id: Travel.id, title: title, author: author }));
       setTitle("");

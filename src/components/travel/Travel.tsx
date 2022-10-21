@@ -8,29 +8,15 @@ import {
 } from "../../redux/TravelSlice";
 
 import useDebounce from "../../hooks/useDebounce";
-import {
-  Alert,
-  Button,
-  Col,
-  Input,
-  List,
-  Row,
-  Space,
-  Spin,
-  Typography,
-} from "antd";
+import { Alert, Button, Divider, Input, List, Spin, Typography } from "antd";
 import AddTravelModal from "../modal/AddTravelModal";
 import styles from "./Travel.module.scss";
-import { type } from "@testing-library/user-event/dist/type";
 import { TravelProps } from "../../type";
 import ChangeTravelModal from "../modal/ChangeTravelModal";
 const { Search } = Input;
 
 export default function Travel() {
   const dispatch = useAppDispatch();
-  const [isModalOpen, setIsModalOpen] = useState(true);
-  const [selectedDelete, setSelectedDelete] = useState<string>("");
-  const [travelChange, setTravelChange] = useState<TravelProps | undefined>();
 
   const searchKey = useAppSelector((state) => state.travel.searchKey);
   const travels = useAppSelector((state) => state.travel.travelList).filter(
@@ -52,8 +38,13 @@ export default function Travel() {
   const statusChangeTravel = useAppSelector(
     (state) => state.travel.statusChangeTravel
   );
+
+  const [isModalOpen, setIsModalOpen] = useState(true);
+  const [selectedDelete, setSelectedDelete] = useState<string>("");
+  const [travelChange, setTravelChange] = useState<TravelProps | undefined>();
   const [search, setSearch] = useState<string>("");
 
+  //debounce search keywords
   const debounce = useDebounce({ time: 500, value: search });
 
   const handleDeleteTravel = (travel: TravelProps) => {
@@ -62,10 +53,13 @@ export default function Travel() {
   const handleSearch = (e: any) => {
     setSearch(e.target.value);
   };
+
+  //search every 0.5 seconds enter keywords
   useEffect(() => {
     dispatch(searchTravel({ key: debounce }));
   }, [debounce]);
 
+  //get list travels when update data
   useEffect(() => {
     dispatch(getTravels());
     setTravelChange(undefined);
@@ -85,7 +79,7 @@ export default function Travel() {
           <Search
             className={`${styles.search__travel} ${styles["ant-btn"]}`}
             // value={search}
-            placeholder="input search text"
+            placeholder="Nhập từ khóa"
             onChange={handleSearch}
           />
           <AddTravelModal />
@@ -94,7 +88,12 @@ export default function Travel() {
         <Typography.Title className={styles["title"]}>
           Danh sách chuyến đi
         </Typography.Title>
-        <List style={{ width: "500px" }}>
+        <List
+          className={styles["wrap__travels"]}
+          style={{
+            width: "500px",
+          }}
+        >
           {loadingTravels !== "loading" ? (
             travels.length > 0 ? (
               travels.map((travel) => (
@@ -129,6 +128,7 @@ export default function Travel() {
                       setSelectedDelete(travel.id);
                       handleDeleteTravel(travel);
                     }}
+                    danger
                   >
                     Xóa
                   </Button>
@@ -143,7 +143,7 @@ export default function Travel() {
               />
             )
           ) : (
-            <Spin />
+            <Spin style={{ marginTop: "25px" }} />
           )}
         </List>
       </div>

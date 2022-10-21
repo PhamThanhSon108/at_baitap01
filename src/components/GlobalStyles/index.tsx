@@ -1,7 +1,7 @@
-import { ReactChild, ReactChildren } from "react";
+import { ReactChild, ReactChildren, ReactNode } from "react";
 import "./GlobalStyles.scss";
 interface AuxProps {
-  children: ReactChild | ReactChildren;
+  children: ReactNode;
 }
 const GlobalStyles = ({ children }: AuxProps) => {
   return <>{children}</>;
