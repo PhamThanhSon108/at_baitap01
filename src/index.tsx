@@ -4,9 +4,10 @@ import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { Provider } from "react-redux";
-import { store } from "./redux/store";
 import GlobalStyles from "./components/GlobalStyles";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Counter from "./components/counter";
+import { store } from "./state";
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
@@ -16,6 +17,11 @@ root.render(
     <Provider store={store}>
       <GlobalStyles>
         <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Counter />} />
+            <Route path="" element={<App />} />
+          </Routes>
+
           <App />
         </BrowserRouter>
       </GlobalStyles>
